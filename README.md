@@ -22,4 +22,4 @@ c.JupyterHub.authenticator_class = 'pammfauthenticator'
 ### Required configuration
 
 * JupyterHub >= 1.0
-* Pamela 1.0 with support for MFA (https://github.com/cmd-ntrf/pamela)
+* Pamela 1.0 with support for MFA (https://github.com/cmd-ntrf/pamela/tree/otp_support)
