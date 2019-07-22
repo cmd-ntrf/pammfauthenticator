@@ -29,43 +29,11 @@ class PAMMFAuthenticator(PAMAuthenticator):
         Return None otherwise.
         """
         username = data['username']
-        passwords = [data['password']]
+        password = data['password']
         if 'otp' in data:
-            passwords.append(data['otp'])
-        try:
-            pamela.authenticate(
-                username, passwords, service=self.service, encoding=self.encoding
-            )
-        except pamela.PAMError as e:
-            if handler is not None:
-                self.log.warning(
-                    "PAM Authentication failed (%s@%s): %s",
-                    username,
-                    handler.request.remote_ip,
-                    e,
-                )
-            else:
-                self.log.warning("PAM Authentication failed: %s", e)
-            return None
-
-        if self.check_account:
-            try:
-                pamela.check_account(
-                    username, service=self.service, encoding=self.encoding
-                )
-            except pamela.PAMError as e:
-                if handler is not None:
-                    self.log.warning(
-                        "PAM Account Check failed (%s@%s): %s",
-                        username,
-                        handler.request.remote_ip,
-                        e,
-                    )
-                else:
-                    self.log.warning("PAM Account Check failed: %s", e)
-                return None
-
-        return username
+            password = [password, data['otp']]
+        data = {'username' : username, 'password' : password}
+        return super().authenticate(handler, data)
 
     def get_handlers(self, app):
         return [('/login', PAMMFALoginHandler),]
