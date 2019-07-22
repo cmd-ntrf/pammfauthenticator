@@ -22,7 +22,6 @@ class PAMMFALoginHandler(LoginHandler):
         )
 
 class PAMMFAuthenticator(PAMAuthenticator):
-    @run_on_executor
     def authenticate(self, handler, data):
         """Authenticate with PAM, and return the username if login is successful.
 
@@ -30,7 +29,7 @@ class PAMMFAuthenticator(PAMAuthenticator):
         """
         username = data['username']
         password = data['password']
-        if 'otp' in data:
+        if data.get('otp'):
             password = [password, data['otp']]
         data = {'username' : username, 'password' : password}
         return super().authenticate(handler, data)
