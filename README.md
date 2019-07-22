@@ -7,7 +7,7 @@ Simple PAM Multifactor Authenticator Plugin for JupyterHub
 You can install it from pip with:
 
 ```
-pip install https://www.github.com/cmd-ntrf/pammfauthenticator/master.zip
+pip install https://www.github.com/cmd-ntrf/pammfauthenticator/archive/master.zip
 ```
 
 ## Usage
