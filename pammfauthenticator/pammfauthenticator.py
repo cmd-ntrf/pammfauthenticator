@@ -1,7 +1,6 @@
 from jinja2 import Template
 from jupyterhub.auth import PAMAuthenticator
 from jupyterhub.handlers.login import LoginHandler
-from tornado.concurrent import run_on_executor
 from tornado.escape import url_escape
 from tornado.httputil import url_concat
 
@@ -30,7 +29,6 @@ class PAMMFALoginHandler(LoginHandler):
         )
 
 class PAMMFAuthenticator(PAMAuthenticator):
-    @run_on_executor
     def authenticate(self, handler, data):
         """Authenticate with PAM, and return the username if login is successful.
 
