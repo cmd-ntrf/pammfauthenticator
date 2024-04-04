@@ -1,24 +1,31 @@
-import pamela
-
+from jinja2 import Template
 from jupyterhub.auth import PAMAuthenticator
 from jupyterhub.handlers.login import LoginHandler
-from tornado.concurrent import run_on_executor
 from tornado.escape import url_escape
 from tornado.httputil import url_concat
 
 class PAMMFALoginHandler(LoginHandler):
     def _render(self, login_error=None, username=None):
+        context = {
+            "next": url_escape(self.get_argument('next', default='')),
+            "username": username,
+            "login_error": login_error,
+            "login_url": self.settings['login_url'],
+            "authenticator_login_url": url_concat(
+                self.authenticator.login_url(self.hub.base_url),
+                {
+                    'next': self.get_argument('next', ''),
+                },
+            ),
+            "xsrf": self.xsrf_token.decode('ascii'),
+        }
+        custom_html = Template(
+            self.authenticator.get_custom_html(self.hub.base_url)
+        ).render(**context)
         return self.render_template(
             'login_otp.html',
-            next=url_escape(self.get_argument('next', default='')),
-            username=username,
-            login_error=login_error,
-            custom_html=self.authenticator.custom_html,
-            login_url=self.settings['login_url'],
-            authenticator_login_url=url_concat(
-                self.authenticator.login_url(self.hub.base_url),
-                {'next': self.get_argument('next', '')},
-            ),
+            **context,
+            custom_html=custom_html,
         )
 
 class PAMMFAuthenticator(PAMAuthenticator):
