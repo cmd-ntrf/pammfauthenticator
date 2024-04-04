@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='jupyterhub-pammfauthenticator',
-    version='1.2.0',
+    version='1.3.0',
     description='PAM Multifactor Authenticator for JupyterHub',
     url='https://github.com/cmd-ntrf/pammfauthenticator',
     author='Félix-Antoine Fortin',
@@ -13,8 +13,8 @@ setup(
         ('share/jupyterhub/templates', ('share/jupyterhub/templates/login_otp.html',))
     ],
     install_requires=[
-        'jupyterhub >= 1.2.0',
-        'pamela',
+        'jupyterhub >= 4.0.0',
+        'pamela >= 1.1.0',
         'tornado'
     ],
     entry_points={
