@@ -13,7 +13,7 @@ setup(
         ('share/jupyterhub/templates', ('share/jupyterhub/templates/login_otp.html',))
     ],
     install_requires=[
-        'jupyterhub >= 4.0.0',
+        'jupyterhub',
         'pamela >= 1.1.0',
         'tornado'
     ],
