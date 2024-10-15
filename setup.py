@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='jupyterhub-pammfauthenticator',
+    name='pammfauthenticator',
     version='1.3.0',
     description='PAM Multifactor Authenticator for JupyterHub',
     url='https://github.com/cmd-ntrf/pammfauthenticator',
